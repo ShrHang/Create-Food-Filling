@@ -24,11 +24,14 @@ public class EatingListener {
 
         LivingEntity entity = event.getEntity();
         ItemStack itemStack = event.getItem();
-        if (!entity.isAlive() || itemStack.isEmpty()) return;
+        if (!entity.isAlive() || itemStack.isEmpty() || entity.level().isClientSide()) return;
 
-        if (itemStack.has(DataComponents.POTION_CONTENTS) && isFood(itemStack)) {
-            for (MobEffectInstance effect : itemStack.get(DataComponents.POTION_CONTENTS).getAllEffects()) {
-                entity.addEffect(effect);
+        if (isFood(itemStack)) {
+            var contents = itemStack.get(DataComponents.POTION_CONTENTS);
+            if (contents != null) {
+                for (MobEffectInstance effect : contents.getAllEffects()) {
+                    entity.addEffect(effect);
+                }
             }
         }
     }
