@@ -9,17 +9,17 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class ClientTooltipsHandler {
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
-        if (!Config.COMMON.EatingApplyEffects.get()) return;
+        if (!Config.COMMON.isEatingApplyEffects.get() && Config.COMMON.isPotionTooltip.get() != Config.TooltipMode.CLIENT) return;
         ItemStack itemStack = event.getItemStack();
-        if (itemStack.has(DataComponents.POTION_CONTENTS) && EatingListener.isFood(itemStack)) {
+        if (itemStack.has(DataComponents.POTION_CONTENTS) && isFood(itemStack)) {
             PotionContents contents = itemStack.get(DataComponents.POTION_CONTENTS);
             if (contents != null) {
                 List<Component> tooltip = event.getToolTip();

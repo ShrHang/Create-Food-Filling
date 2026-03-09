@@ -12,15 +12,34 @@ public class Config {
         COMMON_SPEC = specPair.getRight();
         COMMON = specPair.getLeft();
     }
+
+    public enum TooltipMode {
+        UNABLE, CLIENT, SERVER
+    }
+
     public static class Common {
         public final ModConfigSpec.BooleanValue isFoodFilling;
         public final ModConfigSpec.IntValue foodFillingAmount;
-        public final ModConfigSpec.BooleanValue EatingApplyEffects;
+        public final ModConfigSpec.BooleanValue isEatingApplyEffects;
+        public final ModConfigSpec.EnumValue<TooltipMode> isPotionTooltip;
 
         Common(ModConfigSpec.Builder builder) {
             isFoodFilling = builder.translation("config.is_food_filling").define("isFoodFilling", true);
             foodFillingAmount = builder.defineInRange("foodFillingAmount", 250, 1, 1000);
-            EatingApplyEffects = builder.translation("config.eating_apply_effects").define("EatingApplyEffects", true);
+            isEatingApplyEffects = builder.translation("config.is_eating_apply_effects").define("isEatingApplyEffects", true);
+            isPotionTooltip = builder
+                    .translation("config.is_potion_tooltip")
+                    .comment(
+                            "PotionTooltip on food display mode:",
+                            "UNABLE: Disable potion effect tooltips completely.",
+                            "CLIENT: Render tooltips on the client side.",
+                            "    Requires the mod to be installed on the client, otherwise tooltips will not be shown.",
+                            "SERVER: Bake tooltips into item Lore on the server.",
+                            "    Only requires the mod to be installed on the server.",
+                            "    (Note: Foods filled before enabling SERVER mode must be refilled to show tooltips.",
+                            "     Foods filled in SERVER mode will retain their tooltips even if switched to CLIENT mode later.)"
+                    )
+                    .defineEnum("isPotionTooltip", TooltipMode.CLIENT);
         }
     }
 }

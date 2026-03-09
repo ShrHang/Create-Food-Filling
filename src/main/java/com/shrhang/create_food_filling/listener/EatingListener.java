@@ -7,20 +7,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+
+import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
 
 @EventBusSubscriber
 public class EatingListener {
 
-    public static boolean isFood(ItemStack itemStack) {
-        return itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD);
-    }
-
     @SubscribeEvent
     public static void onEat(LivingEntityUseItemEvent.Finish event) {
 
-        if (!Config.COMMON.EatingApplyEffects.get()) return;
+        if (!Config.COMMON.isEatingApplyEffects.get()) return;
 
         LivingEntity entity = event.getEntity();
         ItemStack itemStack = event.getItem();
