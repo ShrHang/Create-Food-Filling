@@ -11,6 +11,7 @@ You can enable or disable these features in the config file, or adjust the amoun
 ## Environment
 
 Installing this mod on the server is sufficient to enable all features.  
+
 By default, the mod must be installed on the client to display potion effect tooltips.  
 However, you can configure the display mode in the config file to allow tooltips to show even if the mod is **only installed on the server**.
 
