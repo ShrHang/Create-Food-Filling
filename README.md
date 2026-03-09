@@ -12,7 +12,7 @@ You can enable or disable these features in the config file, or adjust the amoun
 
 Installing this mod on the server is sufficient to enable all features.  
 By default, the mod must be installed on the client to display potion effect tooltips.  
-However, you can configure the display mode to allow tooltips to show even if the mod is **only installed on the server**.
+However, you can configure the display mode in the config file to allow tooltips to show even if the mod is **only installed on the server**.
 
 ## Compatibility
 Theoretically, it supports all fluids that have a `potion_contents` component and provide status effects via `MobEffectInstance`, as well as all foods with the `c:foods` tag or `food` component.
