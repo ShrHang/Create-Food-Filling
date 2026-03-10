@@ -18,6 +18,11 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 neoForge {
     version = project.neo_version
 
