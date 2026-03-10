@@ -30,7 +30,6 @@ public class Config {
             isPotionTooltip = builder
                     .translation("config.is_potion_tooltip")
                     .comment(
-                            "PotionTooltip on food display mode:",
                             "UNABLE: Disable potion effect tooltips completely.",
                             "CLIENT: Render tooltips on the client side.",
                             "    Requires the mod to be installed on the client, otherwise tooltips will not be shown.",
