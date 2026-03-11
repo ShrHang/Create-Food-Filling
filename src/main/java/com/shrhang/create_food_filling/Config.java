@@ -24,12 +24,18 @@ public class Config {
         public final ModConfigSpec.EnumValue<TooltipMode> isPotionTooltip;
 
         Common(ModConfigSpec.Builder builder) {
-            isFoodFilling = builder.translation("config.is_food_filling").define("isFoodFilling", true);
-            foodFillingAmount = builder.defineInRange("foodFillingAmount", 250, 1, 1000);
-            isEatingApplyEffects = builder.translation("config.is_eating_apply_effects").define("isEatingApplyEffects", true);
+            isFoodFilling = builder
+                    .comment("When enabled, allows filling foods with potion effects using the mod's mechanics.")
+                    .define("isFoodFilling", true);
+            foodFillingAmount = builder
+                    .comment("The amount of food fillings to apply to the food filling.")
+                    .defineInRange("foodFillingAmount", 250, 1, 1000);
+            isEatingApplyEffects = builder
+                    .comment("When enabled, eating foods with potion effects will apply those effects to the player.")
+                    .define("isEatingApplyEffects", true);
             isPotionTooltip = builder
-                    .translation("config.is_potion_tooltip")
                     .comment(
+                            "Only active when 'isEatingApplyEffects' is enabled.",
                             "UNABLE: Disable potion effect tooltips completely.",
                             "CLIENT: Render tooltips on the client side.",
                             "    Requires the mod to be installed on the client, otherwise tooltips will not be shown.",

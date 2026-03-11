@@ -17,9 +17,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FoodFillingUtil {
+import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 
-    static DataComponentType<PotionContents> POTION_CONTENTS = DataComponents.POTION_CONTENTS;
+public class FoodFillingUtil {
 
     public static boolean isFood(ItemStack itemStack) {
         return itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD);

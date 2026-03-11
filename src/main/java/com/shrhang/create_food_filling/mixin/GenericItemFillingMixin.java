@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
+import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 
 @Mixin(GenericItemFilling.class)
 public abstract class GenericItemFillingMixin {
@@ -45,10 +46,11 @@ public abstract class GenericItemFillingMixin {
 
             ItemStack filledFood = stack.copy();
             filledFood.setCount(1);
-            filledFood.set(DataComponents.POTION_CONTENTS, newContents);
+            filledFood.set(POTION_CONTENTS, newContents);
 
-            if (Config.COMMON.isPotionTooltip.get() == Config.TooltipMode.SERVER)
+            if (Config.COMMON.isPotionTooltip.get() == Config.TooltipMode.SERVER && Config.COMMON.isEatingApplyEffects.get()) {
                 FoodFillingUtil.updateFoodLore(filledFood, stack.copy());
+            }
 
             stack.shrink(1);
 

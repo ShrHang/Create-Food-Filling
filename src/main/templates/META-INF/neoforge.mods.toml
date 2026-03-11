@@ -31,4 +31,11 @@ modId = "create"
 type = "required"
 versionRange = "[6.0.4,)"
 ordering = "AFTER"
-side = "BOTH"
+side = "SERVER"
+
+[[dependencies."${mod_id}"]]
+modId = "tooltips_reforged"
+type = "optional"
+versionRange = "[1.0,)"
+ordering = "NONE"
+side = "CLIENT"

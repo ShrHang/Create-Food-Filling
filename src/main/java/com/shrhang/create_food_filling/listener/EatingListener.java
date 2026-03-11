@@ -10,6 +10,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 
 import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
+import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 
 @EventBusSubscriber
 public class EatingListener {
@@ -24,7 +25,7 @@ public class EatingListener {
         if (!entity.isAlive() || itemStack.isEmpty() || entity.level().isClientSide()) return;
 
         if (isFood(itemStack)) {
-            var contents = itemStack.get(DataComponents.POTION_CONTENTS);
+            var contents = itemStack.get(POTION_CONTENTS);
             if (contents != null) {
                 for (MobEffectInstance effect : contents.getAllEffects()) {
                     entity.addEffect(effect);

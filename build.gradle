@@ -20,7 +20,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 java {
     withSourcesJar()
-    withJavadocJar()
 }
 
 neoForge {
@@ -71,6 +70,21 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
 repositories {
+    maven { url "https://maven.neoforged.net/releases/" }
+    maven { url 'https://jitpack.io' } // Github
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    } // Modrinth Mods
+
     maven { url = "https://mvn.devos.one/snapshots" } // Registrate
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://maven.ithundxr.dev/snapshots" } // Registrate
@@ -85,6 +99,11 @@ dependencies {
 
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-$minecraft_version:$flywheel_version")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-$minecraft_version:$flywheel_version")
+
+    // Tooltips Reforged
+    compileOnly "com.github.IAFEnvoy.Integration:integration-neoforge:0.2"
+    implementation "maven.modrinth:jupiter:2.3.7-1.21.1-neoforge"
+    implementation "maven.modrinth:tooltips-reforged:J25hE1s0"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

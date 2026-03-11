@@ -7,20 +7,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import java.util.List;
 
 import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
+import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class ClientTooltipsHandler {
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
-        if (!Config.COMMON.isEatingApplyEffects.get() && Config.COMMON.isPotionTooltip.get() != Config.TooltipMode.CLIENT) return;
+        if (ModList.get().isLoaded("tooltips_reforged")) return;
+        if (!Config.COMMON.isEatingApplyEffects.get() || Config.COMMON.isPotionTooltip.get() != Config.TooltipMode.CLIENT) return;
         ItemStack itemStack = event.getItemStack();
-        if (itemStack.has(DataComponents.POTION_CONTENTS) && isFood(itemStack)) {
-            PotionContents contents = itemStack.get(DataComponents.POTION_CONTENTS);
+        if (itemStack.has(POTION_CONTENTS) && isFood(itemStack)) {
+            PotionContents contents = itemStack.get(POTION_CONTENTS);
             if (contents != null) {
                 List<Component> tooltip = event.getToolTip();
                 contents.addPotionTooltip(tooltip::add, 1.0F, 20.0F);
