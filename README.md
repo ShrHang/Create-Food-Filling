@@ -17,3 +17,6 @@ However, you can configure the display mode in the config file to allow tooltips
 
 ## Compatibility
 Theoretically, it supports all fluids that have a `potion_contents` component and provide status effects via `MobEffectInstance`, as well as all foods with the `c:foods` tag or `food` component.
+
+### Mod Support
+- **[Tooltips Reforged](https://github.com/CodeOfArdonia/TooltipsReforged)**: When installed on the client, potion tooltips will be rendered in its style (icons) instead of vanilla text.
