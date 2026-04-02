@@ -1,4 +1,7 @@
 # Create: Food Filling
+[![CurseForge](https://img.shields.io/curseforge/dt/1478814?logo=curseforge&label=CurseForge)](https://www.curseforge.com/minecraft/mc-mods/create-food-filling)
+[![Modrinth](https://img.shields.io/modrinth/dt/R1u731qJ?logo=modrinth&label=Modrinth)](https://modrinth.com/mod/create-food-filling)
+[![MCMOD](https://img.shields.io/badge/MC百科-MCMOD-lime)](https://www.mcmod.cn/class/25807.html)
 ## Overview
 A mod that allows you to fill food items with potions by spout.  
 Eating the food will give you the potion effects.  

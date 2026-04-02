@@ -3,7 +3,6 @@ package com.shrhang.create_food_filling.mixin;
 import com.shrhang.create_food_filling.Config;
 import com.shrhang.create_food_filling.util.FoodFillingUtil;
 import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
