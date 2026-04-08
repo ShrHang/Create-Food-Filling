@@ -1,7 +1,7 @@
 package com.shrhang.create_food_filling.util;
 
 import com.shrhang.create_food_filling.Config;
-import net.minecraft.core.component.DataComponentType;
+import com.shrhang.create_food_filling.registry.TagRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,7 +22,8 @@ import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 public class FoodFillingUtil {
 
     public static boolean isFood(ItemStack itemStack) {
-        return itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD);
+        if (itemStack.is(TagRegistry.DISALLOW_FILLED)) return false;
+        return itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD) || itemStack.is(TagRegistry.ALLOW_FILLED);
     }
 
     public static boolean comparePotionContents(Set<String> seen, MobEffectInstance effect) {

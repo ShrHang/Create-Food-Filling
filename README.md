@@ -19,7 +19,12 @@ By default, the mod must be installed on the client to display potion effect too
 However, you can configure the display mode in the config file to allow tooltips to show even if the mod is **only installed on the server**.
 
 ## Compatibility
-Theoretically, it supports all fluids that have a `potion_contents` component and provide status effects via `MobEffectInstance`, as well as all foods with the `c:foods` tag or `food` component.
+- 1.21.1 
+  - Theoretically, it supports all fluids that have a `potion_contents` component and provide status effects via `MobEffectInstance`, as well as all foods with the `c:foods` tag or `food` component.
+- 1.20.1
+  - Supports all fluids that can be read effects by `PotionUtils.getAllEffects()` as well as all food that `isEatble`.
+
+You can also use the item tag `create_food_filling:allow_filled` to allow items be filled, or use the tag `create_food_filling:disallow_filled` to disallow.
 
 ### Mod Support
 - **[Tooltips Reforged](https://github.com/CodeOfArdonia/TooltipsReforged)**: When installed on the client, potion tooltips will be rendered in its style (icons) instead of vanilla text.
