@@ -52,17 +52,14 @@ public class GenericItemFillingMixin {
 
             ItemStack filledFood = stack.copy();
             filledFood.setCount(1);
-            ItemStack oldFood = filledFood.copy(); // 留作对比旧Lore
+
+            List<MobEffectInstance> oldEffects = PotionUtils.getAllEffects(filledFood.getTag());
+            List<MobEffectInstance> customEffects = new java.util.ArrayList<>(oldEffects);
+            customEffects.addAll(newEffects);
+            PotionUtils.setCustomEffects(filledFood, customEffects);
 
             if (Config.COMMON.isPotionTooltip.get() == Config.TooltipMode.SERVER && Config.COMMON.isEatingApplyEffects.get()) {
-                // 1. 将新的药水效果与旧的合并，保存回物品
-                List<MobEffectInstance> oldEffects = PotionUtils.getAllEffects(filledFood.getTag());
-                List<MobEffectInstance> customEffects = new java.util.ArrayList<>(oldEffects);
-                customEffects.addAll(newEffects);
-                PotionUtils.setCustomEffects(filledFood, customEffects);
-
-                // 2. 调用更新 Lore 的封装方法
-                FoodFillingUtil.updateFoodLore(filledFood, oldFood);
+                FoodFillingUtil.updateFoodLore(filledFood, stack.copy());
             }
 
             stack.shrink(1);
