@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.shrhang.create_food_filling.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "create_food_filling.refmap.json",
+  "mixins": [
+    "GenericItemFillingMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
