@@ -1,7 +1,7 @@
 package com.shrhang.create_food_filling;
 
-import com.shrhang.create_food_filling.listener.EatingListener;
-import com.shrhang.create_food_filling.registry.TagRegistry;
+import com.shrhang.create_food_filling.content.listener.EatingListener;
+import com.shrhang.create_food_filling.api.registry.TagRegistry;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;

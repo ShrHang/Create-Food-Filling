@@ -1,10 +1,11 @@
-package com.shrhang.create_food_filling.util;
+package com.shrhang.create_food_filling.content.util;
 
 import com.shrhang.create_food_filling.Config;
-import com.shrhang.create_food_filling.registry.TagRegistry;
+import com.shrhang.create_food_filling.api.registry.TagRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.ItemLore;
@@ -23,7 +24,10 @@ public class FoodFillingUtil {
 
     public static boolean isFood(ItemStack itemStack) {
         if (itemStack.is(TagRegistry.DISALLOW_FILLED)) return false;
-        return itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD) || itemStack.is(TagRegistry.ALLOW_FILLED);
+        if (itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD)) return true;
+        // Respect runtime config: optionally treat animals_food as part of allow_filled
+        if (Config.COMMON.includeAnimalsFoodInAllowFilled.get() && itemStack.is(TagRegistry.ANIMALS_FOOD)) return true;
+        return itemStack.is(TagRegistry.ALLOW_FILLED);
     }
 
     public static boolean comparePotionContents(Set<String> seen, MobEffectInstance effect) {
@@ -96,6 +100,17 @@ public class FoodFillingUtil {
 
         if (!loreLines.isEmpty() || !currentLore.lines().isEmpty()) {
             newStack.set(DataComponents.LORE, new ItemLore(loreLines));
+        }
+    }
+
+    public static void tryToApplyEffect(ItemStack stack, LivingEntity entity) {
+        if (!Config.COMMON.isEatingApplyEffects.get()) return;
+        if (!entity.isAlive() || stack.isEmpty() || entity.level().isClientSide) return;
+        if (!isFood(stack)) return;
+        var contents = stack.get(POTION_CONTENTS);
+        if (contents == null) return;
+        for (MobEffectInstance effect : contents.getAllEffects()) {
+            entity.addEffect(effect, entity);
         }
     }
 }

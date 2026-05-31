@@ -4,7 +4,7 @@ import com.iafenvoy.integration.entrypoint.EntryPointProvider;
 import com.iafenvoy.tooltipsreforged.api.TooltipsReforgeEntrypoint;
 import com.iafenvoy.tooltipsreforged.component.PotionEffectsComponent;
 import com.shrhang.create_food_filling.Config;
-import com.shrhang.create_food_filling.util.FoodFillingUtil;
+import com.shrhang.create_food_filling.content.util.FoodFillingUtil;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.ItemStack;

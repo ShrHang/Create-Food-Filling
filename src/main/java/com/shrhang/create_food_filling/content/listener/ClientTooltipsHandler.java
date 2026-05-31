@@ -1,4 +1,4 @@
-package com.shrhang.create_food_filling.listener;
+package com.shrhang.create_food_filling.content.listener;
 
 import com.shrhang.create_food_filling.Config;
 import net.minecraft.network.chat.Component;
@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import java.util.List;
 
-import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
+import static com.shrhang.create_food_filling.content.util.FoodFillingUtil.isFood;
 import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 
 @EventBusSubscriber(value = Dist.CLIENT)

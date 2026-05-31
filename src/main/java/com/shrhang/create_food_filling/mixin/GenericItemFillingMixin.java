@@ -1,7 +1,7 @@
 package com.shrhang.create_food_filling.mixin;
 
 import com.shrhang.create_food_filling.Config;
-import com.shrhang.create_food_filling.util.FoodFillingUtil;
+import com.shrhang.create_food_filling.content.util.FoodFillingUtil;
 import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
+import static com.shrhang.create_food_filling.content.util.FoodFillingUtil.isFood;
 import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 
 @Mixin(GenericItemFilling.class)
