@@ -1,5 +1,6 @@
 package com.shrhang.create_food_filling;
 
+import com.shrhang.create_food_filling.listener.EatingListener;
 import com.shrhang.create_food_filling.registry.TagRegistry;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -11,6 +12,7 @@ public class CreateFoodFilling {
     public CreateFoodFilling(ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
         registry();
+        EatingListener.init();
     }
 
     private void registry() {

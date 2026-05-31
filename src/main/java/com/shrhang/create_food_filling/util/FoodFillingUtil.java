@@ -30,12 +30,10 @@ public class FoodFillingUtil {
         String id = effect.getEffect().unwrapKey()
                 .map(k -> k.location().toString())
                 .orElse("unknown");
-
         String key = id + "|" +
                 effect.getAmplifier() + "|" +
                 effect.getDuration() + "|" +
                 effect.isVisible();
-
         return !seen.add(key);
     }
 
@@ -43,42 +41,34 @@ public class FoodFillingUtil {
     public static PotionContents getUpdatedPotionContents(ItemStack food, FluidStack fluid) {
         if (fluid.getAmount() < Config.COMMON.foodFillingAmount.get() || !fluid.has(POTION_CONTENTS)) return null;
         if (!isFood(food)) return null;
-
         PotionContents foodContents = food.getOrDefault(POTION_CONTENTS, PotionContents.EMPTY);
         PotionContents fluidContents = fluid.get(POTION_CONTENTS);
-
         Set<String> seen = new HashSet<>();
         for (MobEffectInstance effect : foodContents.getAllEffects()) {
             comparePotionContents(seen, effect);
         }
         PotionContents result = foodContents;
         boolean hasChanged = false;
-
         if (fluidContents != null) {
             for (MobEffectInstance effect : fluidContents.getAllEffects()) {
                 boolean isDuplicate = comparePotionContents(seen, effect);
-
                 if (!isDuplicate) {
                     result = result.withEffectAdded(effect);
                     hasChanged = true;
                 }
             }
         }
-
         return hasChanged ? result : null;
     }
 
     public static void updateFoodLore(ItemStack newStack, @Nullable ItemStack oldStack) {
         if (!newStack.has(POTION_CONTENTS)) return;
-
         PotionContents newContents = newStack.get(POTION_CONTENTS);
         if (newContents == null) return;
-
         List<Component> linesToAdd = new ArrayList<>();
         if (newContents.hasEffects()) {
             newContents.addPotionTooltip(linesToAdd::add, 1.0F, 20.0F);
         }
-
         List<Component> linesToRemove = new ArrayList<>();
         if (oldStack != null && oldStack.has(POTION_CONTENTS)) {
             PotionContents oldContents = oldStack.get(POTION_CONTENTS);
@@ -86,7 +76,6 @@ public class FoodFillingUtil {
                 oldContents.addPotionTooltip(linesToRemove::add, 1.0F, 20.0F);
             }
         }
-
         ItemLore currentLore = newStack.getOrDefault(DataComponents.LORE, ItemLore.EMPTY);
         List<Component> loreLines = new ArrayList<>(currentLore.lines());
 
