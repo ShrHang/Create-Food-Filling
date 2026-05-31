@@ -25,7 +25,6 @@ public class FoodFillingUtil {
     public static boolean isFood(ItemStack itemStack) {
         if (itemStack.is(TagRegistry.DISALLOW_FILLED)) return false;
         if (itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD)) return true;
-        // Respect runtime config: optionally treat animals_food as part of allow_filled
         if (Config.COMMON.includeAnimalsFoodInAllowFilled.get() && itemStack.is(TagRegistry.ANIMALS_FOOD)) return true;
         return itemStack.is(TagRegistry.ALLOW_FILLED);
     }
@@ -100,17 +99,6 @@ public class FoodFillingUtil {
 
         if (!loreLines.isEmpty() || !currentLore.lines().isEmpty()) {
             newStack.set(DataComponents.LORE, new ItemLore(loreLines));
-        }
-    }
-
-    public static void tryToApplyEffect(ItemStack stack, LivingEntity entity) {
-        if (!Config.COMMON.isEatingApplyEffects.get()) return;
-        if (!entity.isAlive() || stack.isEmpty() || entity.level().isClientSide) return;
-        if (!isFood(stack)) return;
-        var contents = stack.get(POTION_CONTENTS);
-        if (contents == null) return;
-        for (MobEffectInstance effect : contents.getAllEffects()) {
-            entity.addEffect(effect, entity);
         }
     }
 }

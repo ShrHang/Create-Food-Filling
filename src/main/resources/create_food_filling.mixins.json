@@ -5,8 +5,10 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "create_food_filling.refmap.json",
   "mixins": [
+    "AnimalMixin",
+    "FoxMixin",
     "GenericItemFillingMixin",
-    "AnimalMixin"
+    "PandaMixin"
   ],
   "client": [
   ],
