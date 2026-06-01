@@ -84,11 +84,7 @@ public class FoodFillingUtil {
         if (!linesToRemove.isEmpty() && !loreLines.isEmpty()) {
             for (Component toRemove : linesToRemove) {
                 String removeText = toRemove.getString();
-                for (int i = 0; i < loreLines.size(); i++) {
-                    if (loreLines.get(i).getString().equals(removeText)) {
-                        loreLines.remove(i);
-                    }
-                }
+                loreLines.removeIf(line -> line.getString().equals(removeText));
             }
         }
 
