@@ -55,7 +55,7 @@ public abstract class GenericItemFillingMixin {
             filledFood.setCount(1);
             filledFood.set(POTION_CONTENTS, newContents);
 
-            if (Config.COMMON.isPotionTooltip.get() == Config.TooltipMode.SERVER && Config.COMMON.isEatingApplyEffects.get()) {
+            if (Config.COMMON.tooltipMode.get() == Config.TooltipMode.SERVER && Config.COMMON.isEatingApplyEffects.get()) {
                 FoodFillingUtil.updateFoodLore(filledFood, stack.copy());
             }
 

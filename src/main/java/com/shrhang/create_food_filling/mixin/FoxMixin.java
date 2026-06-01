@@ -1,5 +1,6 @@
 package com.shrhang.create_food_filling.mixin;
 
+import com.shrhang.create_food_filling.Config;
 import com.shrhang.create_food_filling.api.event.FoxEatingEvent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.animal.Fox;
@@ -16,10 +17,10 @@ import static com.shrhang.create_food_filling.content.util.ApplyEffectUtil.preFi
 public abstract class FoxMixin {
     @Inject(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"))
     private void create_food_filling$onFoxEating(CallbackInfo ci) {
+        if (!Config.SERVER.enableFoxFoodEffects.get()) return;
         Fox fox = (Fox) (Object) this;
         ItemStack itemStack = fox.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!preFilter(itemStack, fox)) return;
-        FoxEatingEvent event = new FoxEatingEvent(fox, itemStack);
-        NeoForge.EVENT_BUS.post(event);
+        NeoForge.EVENT_BUS.post(new FoxEatingEvent(fox, itemStack));
     }
 }

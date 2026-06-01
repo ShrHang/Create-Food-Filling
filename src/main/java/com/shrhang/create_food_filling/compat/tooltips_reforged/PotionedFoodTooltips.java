@@ -17,7 +17,7 @@ import static net.minecraft.core.component.DataComponents.POTION_CONTENTS;
 public class PotionedFoodTooltips implements TooltipsReforgeEntrypoint {
     @Override
     public void appendTooltip(ItemStack stack, List<ClientTooltipComponent> components, RegistryAccess registry) {
-        if (!Config.COMMON.isEatingApplyEffects.get() || Config.COMMON.isPotionTooltip.get() != Config.TooltipMode.CLIENT) return;
+        if (!Config.COMMON.isEatingApplyEffects.get() || Config.COMMON.tooltipMode.get() != Config.TooltipMode.CLIENT) return;
         if (stack.has(POTION_CONTENTS) && FoodFillingUtil.isFood(stack)) {
             components.add(new PotionEffectsComponent(stack, 1.0F));
         }

@@ -1,5 +1,6 @@
 package com.shrhang.create_food_filling.mixin;
 
+import com.shrhang.create_food_filling.Config;
 import com.shrhang.create_food_filling.api.event.AnimalFeedingEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.animal.Animal;
@@ -17,9 +18,9 @@ import static com.shrhang.create_food_filling.content.util.ApplyEffectUtil.preFi
 public abstract class AnimalMixin {
     @Inject(method = "usePlayerItem", at = @At("TAIL"))
     private void create_food_filling$onAnimalFed(Player player, InteractionHand hand, ItemStack itemStack, CallbackInfo ci) {
+        if (!Config.SERVER.enableFeedAnimalFoodEffects.get()) return;
         if (!preFilter(itemStack, player)) return;
         Animal animal = (Animal) (Object) this;
-        AnimalFeedingEvent event = new AnimalFeedingEvent(animal, player, hand, itemStack);
-        NeoForge.EVENT_BUS.post(event);
+        NeoForge.EVENT_BUS.post(new AnimalFeedingEvent(animal, player, hand, itemStack));
     }
 }

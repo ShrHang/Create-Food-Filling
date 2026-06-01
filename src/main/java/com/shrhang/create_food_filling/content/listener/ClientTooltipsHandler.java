@@ -19,7 +19,7 @@ public class ClientTooltipsHandler {
     @SubscribeEvent
     public static void onTooltip(ItemTooltipEvent event) {
         if (ModList.get().isLoaded("tooltips_reforged")) return;
-        if (!Config.COMMON.isEatingApplyEffects.get() || Config.COMMON.isPotionTooltip.get() != Config.TooltipMode.CLIENT) return;
+        if (!Config.COMMON.isEatingApplyEffects.get() || Config.COMMON.tooltipMode.get() != Config.TooltipMode.CLIENT) return;
         ItemStack itemStack = event.getItemStack();
         if (itemStack.has(POTION_CONTENTS) && isFood(itemStack)) {
             PotionContents contents = itemStack.get(POTION_CONTENTS);

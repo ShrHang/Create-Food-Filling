@@ -5,7 +5,6 @@ import com.shrhang.create_food_filling.api.registry.TagRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.ItemLore;
@@ -25,7 +24,7 @@ public class FoodFillingUtil {
     public static boolean isFood(ItemStack itemStack) {
         if (itemStack.is(TagRegistry.DISALLOW_FILLED)) return false;
         if (itemStack.is(Tags.Items.FOODS) || itemStack.has(DataComponents.FOOD)) return true;
-        if (Config.COMMON.includeAnimalsFoodInAllowFilled.get() && itemStack.is(TagRegistry.ANIMALS_FOOD)) return true;
+        if (Config.COMMON.isAnimalsFoodFilled.get() && itemStack.is(TagRegistry.ANIMALS_FOOD)) return true;
         return itemStack.is(TagRegistry.ALLOW_FILLED);
     }
 
