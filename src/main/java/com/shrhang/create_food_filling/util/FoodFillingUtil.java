@@ -1,25 +1,28 @@
 package com.shrhang.create_food_filling.util;
 
+import com.shrhang.create_food_filling.Config;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraft.nbt.Tag;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.shrhang.create_food_filling.registry.TagRegistry.*;
+import static com.shrhang.create_food_filling.api.registry.TagRegistry.*;
 
 public class FoodFillingUtil {
     public static boolean isFood(ItemStack itemStack){
         if (itemStack.is(DISALLOW_FILLED)) return false;
-        return itemStack.isEdible() || itemStack.is(ALLOW_FILLED);
+        if (itemStack.isEdible()) return true;
+        if (Config.COMMON.isAnimalsFoodFilled.get() && itemStack.is(ANIMALS_FOOD)) return true;
+        return itemStack.is(ALLOW_FILLED);
     }
 
     public static List<MobEffectInstance> getUpdatedPotions(ItemStack itemStack, FluidStack fluidStack){

@@ -1,9 +1,7 @@
 package com.shrhang.create_food_filling;
 
-import com.shrhang.create_food_filling.registry.TagRegistry;
-import net.minecraftforge.fml.ModLoadingContext;
+import com.shrhang.create_food_filling.api.registry.TagRegistry;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 
 @Mod(CreateFoodFilling.MODID)
 public class CreateFoodFilling {
@@ -12,7 +10,7 @@ public class CreateFoodFilling {
 
     public CreateFoodFilling() {
         TagRegistry.init();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
+        Config.init();
     }
 
 }
