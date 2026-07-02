@@ -40,6 +40,18 @@ public class Config {
         public final ModConfigSpec.EnumValue<TooltipMode> tooltipMode;
 
         Common(ModConfigSpec.Builder builder) {
+
+            builder.comment(
+                    """
+                                  `.                  `..      `..                  `.. ..                   \s
+                                 `. ..                 `..    `..                 `..    `..                 \s
+                                `.  `..    `....        `.. `..`..   `..  `..      `..        `..      `..   \s
+                               `..   `..  `..             `..`..  `..`..  `..        `..    `.   `.. `.   `..\s
+                              `...... `..   `...          `.`..    `.`..  `..           `..`..... `.`..... `..
+                             `..       `..    `..         `..`..  `..`..  `..     `..    `.`.       `.       \s
+                            `..         `.`.. `..         `..  `..     `..`..       `.. ..   `....    `....  \s
+                                                                                                             \s"""
+            );
             isFoodFilling = builder
                     .comment("When enabled, allows filling foods with potion effects using the mod's mechanics.")
                     .define("isFoodFilling", true);

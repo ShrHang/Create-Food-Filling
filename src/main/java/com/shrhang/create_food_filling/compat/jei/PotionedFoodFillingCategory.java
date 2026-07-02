@@ -1,11 +1,10 @@
 package com.shrhang.create_food_filling.compat.jei;
 
-import com.simibubi.create.AllBlocks;
+import com.shrhang.create_food_filling.Config;
+import com.shrhang.create_food_filling.CreateFoodFilling;
 import com.simibubi.create.compat.jei.category.animations.AnimatedSpout;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.shrhang.create_food_filling.Config;
-import com.shrhang.create_food_filling.CreateFoodFilling;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;

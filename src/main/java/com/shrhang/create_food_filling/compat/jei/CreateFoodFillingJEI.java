@@ -1,7 +1,7 @@
 package com.shrhang.create_food_filling.compat.jei;
 
-import com.simibubi.create.AllBlocks;
 import com.shrhang.create_food_filling.CreateFoodFilling;
+import com.simibubi.create.AllBlocks;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.drawable.IDrawable;
