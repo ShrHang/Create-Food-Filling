@@ -1,0 +1,26 @@
+package com.shrhang.create_food_filling.mixin;
+
+import com.shrhang.create_food_filling.Config;
+import com.shrhang.create_food_filling.api.event.PandaEatingEvent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static com.shrhang.create_food_filling.util.ApplyEffectUtil.preFilter;
+
+@Mixin(Panda.class)
+public abstract class PandaMixin {
+    @Inject(method = "handleEating", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/Panda;setItemSlot(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)V"))
+    private void create_food_filling$onPandaEating(CallbackInfo ci) {
+        if (!Config.SERVER.enablePandaFoodEffects.get()) return;
+        Panda panda = (Panda) (Object) this;
+        ItemStack itemStack = panda.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (!preFilter(itemStack, panda)) return;
+        MinecraftForge.EVENT_BUS.post(new PandaEatingEvent(panda, itemStack));
+    }
+}
