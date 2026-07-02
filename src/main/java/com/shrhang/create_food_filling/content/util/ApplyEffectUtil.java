@@ -25,7 +25,7 @@ public class ApplyEffectUtil {
                 || stack.isEmpty()
                 || !isFood(stack)) return;
 
-        var contents = stack.get(POTION_CONTENTS);
+        var contents = stack.copy().get(POTION_CONTENTS);
         if (contents != null) {
             contents.getAllEffects().forEach(effect -> entity.addEffect(effect, entity));
         }

@@ -9,7 +9,7 @@ public class VillagerEatingEvent extends LivingEvent {
 
     public VillagerEatingEvent(Villager villager, ItemStack itemStack) {
         super(villager);
-        this.itemStack = itemStack;
+        this.itemStack = itemStack.copy();
     }
 
     public ItemStack getItemStack() {

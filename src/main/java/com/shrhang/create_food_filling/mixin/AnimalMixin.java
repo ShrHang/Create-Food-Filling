@@ -19,8 +19,8 @@ public abstract class AnimalMixin {
     @Inject(method = "usePlayerItem", at = @At("TAIL"))
     private void create_food_filling$onAnimalFed(Player player, InteractionHand hand, ItemStack itemStack, CallbackInfo ci) {
         if (!Config.SERVER.enableFeedAnimalFoodEffects.get()) return;
-        if (!preFilter(itemStack, player)) return;
         Animal animal = (Animal) (Object) this;
+        if (!preFilter(itemStack, animal)) return;
         NeoForge.EVENT_BUS.post(new AnimalFeedingEvent(animal, player, hand, itemStack));
     }
 }

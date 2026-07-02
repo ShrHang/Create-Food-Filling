@@ -45,7 +45,7 @@ public class Config {
                     .define("isFoodFilling", true);
             isAnimalsFoodFilled = builder
                     .comment("When enabled, items in the \"create_food_filling:animals_food\" tag are considered fillable, with higher priority than allow_filled.")
-                    .define("isAnimalsFoodFilled", true);
+                    .define("isAnimalsFoodFilled", false);
             foodFillingAmount = builder
                     .comment("The amount of fluid required to fill a food item with potion effects.")
                     .defineInRange("foodFillingAmount", 250, 1, 1000);
