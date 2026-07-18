@@ -35,6 +35,7 @@ public abstract class GenericItemFillingMixin {
     @Inject(method = "getRequiredAmountForItem", at = @At("HEAD"), cancellable = true)
     private static void create_food_filling$getFoodPotionAmount(Level world, ItemStack stack, FluidStack availableFluid, CallbackInfoReturnable<Integer> cir) {
         if (!Config.COMMON.isFoodFilling.get()) return;
+        if (!isFood(stack)) return;
         if (FoodFillingUtil.getUpdatedPotionContents(stack, availableFluid) != null) {
             cir.setReturnValue(Config.COMMON.foodFillingAmount.get());
         }
@@ -46,6 +47,7 @@ public abstract class GenericItemFillingMixin {
     @Inject(method = "fillItem", at = @At("HEAD"), cancellable = true)
     private static void create_food_filling$fillFood(Level world, int requiredAmount, ItemStack stack, FluidStack availableFluid, CallbackInfoReturnable<ItemStack> cir) {
         if (!Config.COMMON.isFoodFilling.get()) return;
+        if (!isFood(stack)) return;
         PotionContents newContents = FoodFillingUtil.getUpdatedPotionContents(stack, availableFluid);
 
         if (newContents != null) {
