@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.1 26-7-18
+- Fixed a mistake in 1.20.1 while filling glass bottles with potion fluids, which caused the glass bottles being filled as `potioned food` instead of the `potion` item.
+
 ## 1.5.0 26-7-2
 - Added JEI compatibility for food filling.
     - Filled foods are now shown in a dedicated JEI category with Create Spout-style visuals.

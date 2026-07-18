@@ -8,10 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,9 +19,6 @@ import static com.shrhang.create_food_filling.util.FoodFillingUtil.isFood;
 
 @Mixin(GenericItemFilling.class)
 public class GenericItemFillingMixin {
-
-    @Unique
-    private static final Logger create_food_filling$LOGGER = LogManager.getLogger();
 
     @Inject(method = "canItemBeFilled", at = @At("HEAD"), cancellable = true, remap = false)
     private static void create_food_filling$canFoodBeFilled(Level world, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
@@ -38,6 +32,7 @@ public class GenericItemFillingMixin {
     @Inject(method = "getRequiredAmountForItem", at = @At("HEAD"), cancellable = true, remap = false)
     private static void create_food_filling$getFoodPotionAmount(Level world, ItemStack stack, FluidStack availableFluid, CallbackInfoReturnable<Integer> cir) {
         if (!Config.COMMON.isFoodFilling.get()) return;
+        if (!isFood(stack)) return;
         if (!FoodFillingUtil.getUpdatedPotions(stack, availableFluid).isEmpty()) {
             cir.setReturnValue(Config.COMMON.foodFillingAmount.get());
         }
@@ -46,6 +41,7 @@ public class GenericItemFillingMixin {
     @Inject(method = "fillItem", at = @At("HEAD"), cancellable = true, remap = false)
     private static void create_food_filling$fillFood(Level world, int requiredAmount, ItemStack stack, FluidStack availableFluid, CallbackInfoReturnable<ItemStack> cir) {
         if (!Config.COMMON.isFoodFilling.get()) return;
+        if (!isFood(stack)) return;
         List<MobEffectInstance> newEffects = FoodFillingUtil.getUpdatedPotions(stack, availableFluid);
         if (!newEffects.isEmpty()) {
             availableFluid.shrink(requiredAmount);
