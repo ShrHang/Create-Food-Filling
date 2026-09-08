@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.shrhang.create_food_filling.mixin",
+  "package": "io.github.shrhang.create_food_filling.mixin",
   "compatibilityLevel": "JAVA_21",
   "refmap": "create_food_filling.refmap.json",
   "mixins": [

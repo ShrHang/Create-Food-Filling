@@ -1,0 +1,132 @@
+name: Publish Maven
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: "要发布的源码分支或标签，例如 neoforge/1.21.1"
+        required: true
+        default: "neoforge/1.21.1"
+        type: string
+      java_version:
+        description: "该分支构建所需的 Java 版本"
+        required: true
+        default: "21"
+        type: choice
+        options:
+          - "17"
+          - "21"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-maven
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out mod source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_ref }}
+          path: source
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ inputs.java_version }}
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Check out Maven repository
+        uses: actions/checkout@v4
+        with:
+          repository: ShrHang/ShrHang
+          ref: maven
+          path: maven-site
+          token: ${{ secrets.MAVEN_PUBLISH_TOKEN }}
+
+      - name: Generate publication POM
+        working-directory: source
+        shell: bash
+        run: bash ./gradlew generatePomFileForMavenJavaPublication
+
+      - name: Check release does not already exist
+        shell: bash
+        run: |
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          pom = Path("source/build/publications/mavenJava/pom-default.xml")
+          root = ET.parse(pom).getroot()
+          ns = {"m": "http://maven.apache.org/POM/4.0.0"}
+
+          def value(name):
+              text = root.findtext(f"m:{name}", namespaces=ns)
+              if not text or not text.strip():
+                  raise SystemExit(f"Missing POM field: {name}")
+              return text.strip()
+
+          group = value("groupId")
+          artifact = value("artifactId")
+          version = value("version")
+          target = (
+              Path("maven-site")
+              / group.replace(".", "/")
+              / artifact
+              / version
+          )
+
+          if target.exists():
+              raise SystemExit(
+                  f"Already published: {group}:{artifact}:{version}. "
+                  "Use a new version to publish new contents."
+              )
+          PYTHON
+
+      - name: Restore existing Maven contents
+        shell: bash
+        run: |
+          mkdir -p source/repo
+          if [ -d maven-site/io ]; then
+            cp -a maven-site/io source/repo/
+          fi
+
+      - name: Build and publish locally
+        working-directory: source
+        shell: bash
+        run: bash ./gradlew build publish
+
+      - name: Copy Maven contents
+        shell: bash
+        run: |
+          test -d source/repo/io
+          mkdir -p maven-site/io
+          rsync -a source/repo/io/ maven-site/io/
+          touch maven-site/.nojekyll
+
+      - name: Commit and push
+        working-directory: maven-site
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add io .nojekyll
+
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+
+          source_commit=$(git -C ../source rev-parse --short HEAD)
+          git commit -m "Publish Create-Food-Filling from ${source_commit}"
+          git push origin HEAD:maven
